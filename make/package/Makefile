@@ -1,7 +1,7 @@
 #
 # Makefile --Build rules for the package directory of makeshift.
 #
-MK_SRC = aip.mk deb.mk rpm-repo.mk rpm.mk zip.mk
+MK_SRC = aip.mk deb.mk debhelper.mk rpm-repo.mk rpm.mk zip.mk
 subdir	= package
 
 include makeshift.mk
