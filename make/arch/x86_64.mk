@@ -1,5 +1,7 @@
 #
 # x86_64 --Definitions for 64-bit Intel architectures.
 #
-ARCH.C_DEFS = -m64
-ARCH.C++_DEFS = -m64
+# Note: X86_64 is also known as AMD64 on some platforms.
+#
+
+include arch/amd64.mk
