@@ -18,8 +18,13 @@ DEB_COMPAT ?= 13
 DEB_DATE ?= $(shell git show --no-patch --format="%ad" @)
 DEB_DISTRIBUTION ?= $(shell ${GIT_DIRTINESS_CMD})
 DEB_LICENSES ?= $(wildcard ${topdir}/LICENSES/*.md)
-DEB_MAINTAINER ?= $(shell git tag --list --format="%(taggername) %(taggeremail)" "${VERSION_TAG}")
 DEB_COPYRIGHT_HOLDER ?= $(error DEB_COPYRIGHT_HOLDER is not defined)
+
+DEB_MAINTAINER_TAG = $(or ${VERSION_TAG},$(shell git describe --long | sed -re "s/-[0-9]+-g[0-9a-f]+$$//"))
+DEB_MAINTAINER_FMT = "%(if)%(taggername)%(then)%(taggername) %(taggeremail)%(else)Unknown%(end)"
+DEB_MAINTAINER_CMD = git tag -n0 --format=${DEB_MAINTAINER_FMT} ${DEB_MAINTAINER_TAG}
+
+DEB_MAINTAINER ?= $(eval export DEB_MAINTAINER:=$(shell ${DEB_MAINTAINER_CMD})${DEB_MAINTAINER}
 
 DEB_SRC_PACKAGE ?= ${DEB_PROJECT}-$(notdir $(realpath ${CURDIR}))
 DEB_BIN_PACKAGES ?= none
